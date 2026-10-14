@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarePoint | Hospital Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="#home" class="logo">✚ CarePoint</a>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#login">Login</a>
+    </nav>
+    <a href="#login" class="nav-button">Get Started</a>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="eyebrow">YOUR HEALTH, OUR PRIORITY</span>
+            <h1>Healthcare made<br>simpler and <span>smarter.</span></h1>
+            <p>Manage appointments, access healthcare services,
+                and stay connected with your care team in one place.</p>
+            <a href="#roles" class="primary-button">Explore Portal →</a>
+            <div class="hero-points">
+                <span>✓ Easy appointments</span>
+                <span>✓ Connected care</span>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="medical-icon">✚</div>
+            <h2>Care that connects us</h2>
+            <p>One platform for patients, doctors and hospital administrators.</p>
+            <div class="hero-stat">
+                <span>Patient care</span>
+                <strong>Made easier</strong>
+            </div>
+            <div class="hero-stat">
+                <span>Appointments</span>
+                <strong>In one place</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="roles">
+        <div class="section-heading">
+            <span class="eyebrow">WELCOME TO CAREPOINT</span>
+            <h2>Choose your portal</h2>
+            <p>Select your role to continue to the login section.</p>
+        </div>
+
+        <div class="role-grid">
+            <button class="role-card" type="button" data-role="PATIENT">
+                <span class="role-icon patient-icon">♡</span>
+                <h3>Patient</h3>
+                <p>Appointments and healthcare access</p>
+                <span class="role-link">Patient Login →</span>
+            </button>
+
+            <button class="role-card" type="button" data-role="DOCTOR">
+                <span class="role-icon doctor-icon">✚</span>
+                <h3>Doctor</h3>
+                <p>Appointments and patient care</p>
+                <span class="role-link">Doctor Login →</span>
+            </button>
+
+            <button class="role-card" type="button" data-role="ADMIN">
+                <span class="role-icon admin-icon">⚙</span>
+                <h3>Administrator</h3>
+                <p>Hospital records and management</p>
+                <span class="role-link">Admin Login →</span>
+            </button>
+        </div>
+
+        <p class="notice">
+            Your selected role must match the role assigned to your account.
+        </p>
+    </section>
+
+    <section class="auth-section" id="login">
+        <div class="auth-info">
+            <span class="eyebrow">SECURE ACCESS</span>
+            <h2>Welcome back!</h2>
+            <p>Sign in to access the CarePoint hospital portal.</p>
+            <div class="auth-benefit">✓ Convenient hospital services</div>
+            <div class="auth-benefit">✓ Easy access to appointments</div>
+            <div class="auth-benefit">✓ Role-based portal access</div>
+        </div>
+
+        <div class="auth-panel">
+            <div class="tabs">
+                <button type="button" class="tab active" data-tab="loginForm">
+                    Login
+                </button>
+                <button type="button" class="tab" data-tab="registerForm">
+                    Register
+                </button>
+            </div>
+
+            <p id="selectedRole" class="selected-role">Selected role: Patient</p>
+
+            <form id="loginForm">
+                <label for="loginEmail">Email address</label>
+                <input id="loginEmail" type="email"
+                       placeholder="you@example.com" required>
+
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" type="password"
+                       placeholder="Enter your password" required>
+
+                <button class="primary-button full-button" type="submit">
+                    Sign In
+                </button>
+                <p id="loginMessage" class="message" role="status"></p>
+            </form>
+
+            <form id="registerForm" hidden>
+                <label for="regName">Full name</label>
+                <input id="regName" type="text"
+                       placeholder="Your full name" required>
+
+                <label for="regEmail">Email address</label>
+                <input id="regEmail" type="email"
+                       placeholder="you@example.com" required>
+
+                <label for="regPassword">Password</label>
+                <input id="regPassword" type="password"
+                       placeholder="At least 8 characters"
+                       minlength="8" required>
+
+                <button class="primary-button full-button" type="submit">
+                    Create Patient Account
+                </button>
+                <p class="notice">Public registration creates a Patient account.</p>
+                <p id="registerMessage" class="message" role="status"></p>
+            </form>
+
+            <div id="sessionPanel" hidden>
+                <p id="sessionStatus"></p>
+                <button type="button" id="dashboardButton"
+                        class="primary-button full-button">
+                    Open Dashboard
+                </button>
+                <button type="button" id="logoutButton"
+                        class="secondary-button full-button">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <div class="section-heading">
+            <span class="eyebrow">OUR PLATFORM</span>
+            <h2>Healthcare, organized</h2>
+        </div>
+
+        <div class="service-grid">
+            <article class="service-card">
+                <span>📅</span>
+                <h3>Appointments</h3>
+                <p>Organize and review hospital appointments.</p>
+            </article>
+            <article class="service-card">
+                <span>🩺</span>
+                <h3>Doctor Directory</h3>
+                <p>Explore doctor information and specializations.</p>
+            </article>
+            <article class="service-card">
+                <span>📋</span>
+                <h3>Patient Records</h3>
+                <p>Support organized patient record management.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="dashboard-section" id="dashboard" hidden>
+        <div class="section-heading">
+            <span class="eyebrow">YOUR WORKSPACE</span>
+            <h2 id="dashboardTitle">Hospital Dashboard</h2>
+            <p id="dashboardDescription"></p>
+        </div>
+
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span>Doctors</span>
+                <strong id="doctorCount">—</strong>
+                <button type="button" id="loadDoctors">View Doctors</button>
+            </article>
+            <article class="stat-card">
+                <span>Patients</span>
+                <strong id="patientCount">—</strong>
+                <button type="button" id="loadPatients">View Patients</button>
+            </article>
+            <article class="stat-card">
+                <span>Appointments</span>
+                <strong id="appointmentCount">—</strong>
+                <button type="button" id="loadAppointments">View Appointments</button>
+            </article>
+        </div>
+
+        <div class="management-grid">
+            <article class="service-card" id="patientManagement">
+                <h3>Register Patient</h3>
+                <form id="patientForm">
+                    <label for="patientName">Patient name</label>
+                    <input id="patientName" required>
+                    <label for="patientEmail">Email</label>
+                    <input id="patientEmail" type="email" required>
+                    <label for="patientPhone">Phone</label>
+                    <input id="patientPhone" required>
+                    <label for="patientGender">Gender</label>
+                    <select id="patientGender" required>
+                        <option value="">Select gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                    <button class="primary-button full-button" type="submit">
+                        Save Patient
+                    </button>
+                </form>
+                <p id="patientMessage" class="message" role="status"></p>
+            </article>
+
+            <article class="service-card" id="doctorManagement">
+                <h3>Register Doctor</h3>
+                <form id="doctorForm">
+                    <label for="doctorName">Doctor name</label>
+                    <input id="doctorName" required>
+                    <label for="doctorSpecialization">Specialization</label>
+                    <input id="doctorSpecialization" required>
+                    <label for="doctorEmail">Email</label>
+                    <input id="doctorEmail" type="email" required>
+                    <label for="doctorPhone">Phone</label>
+                    <input id="doctorPhone" required>
+                    <button class="primary-button full-button" type="submit">
+                        Save Doctor
+                    </button>
+                </form>
+                <p id="doctorMessage" class="message" role="status"></p>
+            </article>
+
+            <article class="service-card" id="appointmentManagement">
+                <h3>Book Appointment</h3>
+                <form id="appointmentForm">
+                    <label for="appointmentPatientId">Patient ID</label>
+                    <input id="appointmentPatientId" type="number"
+                           min="1" required>
+                    <label for="appointmentDoctorId">Doctor ID</label>
+                    <input id="appointmentDoctorId" type="number"
+                           min="1" required>
+                    <label for="appointmentDate">Date</label>
+                    <input id="appointmentDate" type="date" required>
+                    <label for="appointmentReason">Reason</label>
+                    <textarea id="appointmentReason"></textarea>
+                    <button class="primary-button full-button" type="submit">
+                        Book Appointment
+                    </button>
+                </form>
+                <p id="appointmentMessage" class="message" role="status"></p>
+            </article>
+        </div>
+
+        <section class="service-card records-panel">
+            <h3>Records</h3>
+            <div id="records" aria-live="polite">
+                Select a record type above to view data.
+            </div>
+        </section>
+
+        <section class="service-card chatbot">
+            <h3>CarePoint FAQ Assistant</h3>
+            <p>Ask about appointments, registration or hospital services.</p>
+            <form id="chatForm">
+                <label for="chatQuestion">Your question</label>
+                <input id="chatQuestion"
+                       placeholder="How do I book an appointment?" required>
+                <button class="primary-button full-button" type="submit">
+                    Ask Assistant
+                </button>
+            </form>
+            <p id="chatAnswer" class="message" aria-live="polite"></p>
+        </section>
+    </section>
+</main>
+
+<footer>
+    <strong>✚ CarePoint</strong>
+    <p>Hospital Management System | College Mini Project</p>
+    <p>For demonstration purposes. Use authorized test data only.</p>
+</footer>
+
+<!-- CarePoint Smart Hospital Assistant -->
+<div id="carepoint-chatbot">
+    <button id="chat-toggle" type="button" aria-label="Open Smart Assistant">
+        💬 Ask CarePoint
+    </button>
+
+    <section id="chat-window" hidden>
+        <div class="chat-header">
+            <div>
+                <strong>CarePoint Assistant</strong>
+                <p>Your Smart Hospital Guide</p>
+            </div>
+            <button id="chat-close" type="button" aria-label="Close chat">✕</button>
+        </div>
+
+        <div id="chatMessages" role="log" aria-live="polite">
+            <div class="chat-message bot-message">
+                Hello! 👋 I'm your CarePoint Assistant.
+                Ask me about registration, doctors, or appointments.
+            </div>
+        </div>
+
+        <form id="chatForm">
+            <input
+                id="chatInput"
+                type="text"
+                placeholder="Type your question..."
+                autocomplete="off"
+                required
+            >
+            <button type="submit">Send</button>
+        </form>
+    </section>
+</div>
+<!-- End CarePoint Smart Hospital Assistant -->
+
+</body>
+</html>

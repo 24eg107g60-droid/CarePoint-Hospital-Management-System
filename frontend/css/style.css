@@ -1,0 +1,638 @@
+
+:root {
+    --primary: #087f8c;
+    --primary-dark: #06636d;
+    --accent: #d8f3ef;
+    --background: #f4f8fb;
+    --white: #ffffff;
+    --text: #183344;
+    --muted: #647887;
+    --border: #dce7ec;
+    --shadow: 0 12px 35px rgba(24, 51, 68, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button, .primary-button, .nav-button {
+    cursor: pointer;
+}
+
+.navbar {
+    min-height: 76px;
+    padding: 16px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    color: var(--primary);
+    font-size: 25px;
+    font-weight: 800;
+}
+
+nav {
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: var(--primary);
+}
+
+.nav-button, .primary-button {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-weight: 700;
+    text-align: center;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.nav-button:hover, .primary-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.hero {
+    padding: 75px 7%;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: center;
+    gap: 55px;
+    background: linear-gradient(135deg, #e7f8f6, #f5f9fc);
+}
+
+.eyebrow {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    margin: 20px 0;
+    font-size: clamp(36px, 5vw, 62px);
+    line-height: 1.12;
+    letter-spacing: -1.8px;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.hero-content > p, .section-heading > p,
+.auth-info > p {
+    max-width: 580px;
+    margin-bottom: 25px;
+    color: var(--muted);
+}
+
+.hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-top: 25px;
+    color: var(--primary-dark);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.hero-card {
+    padding: 32px;
+    border-radius: 24px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.medical-icon {
+    display: grid;
+    place-items: center;
+    width: 75px;
+    height: 75px;
+    border-radius: 20px;
+    background: var(--accent);
+    color: var(--primary);
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 22px;
+}
+
+.hero-card h2 {
+    margin-bottom: 10px;
+}
+
+.hero-card > p {
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+.hero-stat {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+}
+
+.hero-stat span {
+    color: var(--muted);
+}
+
+.hero-stat strong {
+    color: var(--primary-dark);
+}
+
+.section, .auth-section, .dashboard-section {
+    max-width: 1250px;
+    margin: auto;
+    padding: 65px 28px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2, .auth-info h2 {
+    margin: 10px 0;
+    font-size: clamp(27px, 3vw, 38px);
+}
+
+.role-grid, .service-grid, .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.role-card {
+    width: 100%;
+    padding: 28px 22px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--white);
+    text-align: left;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.role-card:hover, .role-card.selected {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+}
+
+.role-icon {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    font-size: 29px;
+}
+
+.patient-icon {
+    background: #e0f6ed;
+    color: #16845d;
+}
+
+.doctor-icon {
+    background: #e2f1ff;
+    color: #1677ba;
+}
+
+.admin-icon {
+    background: #eee8ff;
+    color: #7250bb;
+}
+
+.role-card h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.role-card p {
+    color: var(--muted);
+    margin-bottom: 18px;
+}
+
+.role-link {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.notice {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.auth-section {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 35px;
+    align-items: center;
+    background: #e8f5f5;
+    border-radius: 24px;
+    margin-bottom: 50px;
+}
+
+.auth-info {
+    padding: 15px;
+}
+
+.auth-benefit {
+    margin-top: 17px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.auth-panel {
+    padding: 32px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 5px;
+    border-radius: 12px;
+    background: var(--background);
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 12px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.tab.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.selected-role {
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 14px 0 7px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.12);
+}
+
+.full-button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.secondary-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--text);
+    font-weight: 700;
+}
+
+.message {
+    overflow-wrap: anywhere;
+    margin-top: 12px;
+    color: var(--primary-dark);
+    font-size: 14px;
+}
+
+.service-card, .stat-card {
+    padding: 25px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.service-card > span {
+    font-size: 30px;
+}
+
+.service-card h3 {
+    margin: 10px 0;
+}
+
+.service-card p {
+    color: var(--muted);
+}
+
+.stats-grid {
+    margin-bottom: 28px;
+}
+
+.stat-card span, .stat-card strong {
+    display: block;
+}
+
+.stat-card span {
+    color: var(--muted);
+}
+
+.stat-card strong {
+    margin: 10px 0;
+    font-size: 35px;
+    color: var(--primary);
+}
+
+.stat-card button {
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.management-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.records-panel, .chatbot {
+    margin-top: 25px;
+}
+
+footer {
+    padding: 35px 20px;
+    background: #123e49;
+    color: #e6f5f5;
+    text-align: center;
+}
+
+footer strong {
+    font-size: 23px;
+}
+
+footer p {
+    margin-top: 7px;
+    color: #c0d7dc;
+    font-size: 14px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 850px) {
+    .hero, .auth-section {
+        grid-template-columns: 1fr;
+    }
+
+    .role-grid, .service-grid, .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero {
+        padding: 50px 6%;
+    }
+}
+
+@media (max-width: 560px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 15px 5%;
+    }
+
+    nav {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .nav-button {
+        padding: 9px 12px;
+    }
+
+    .role-grid, .service-grid, .stats-grid,
+    .management-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section, .auth-section, .dashboard-section {
+        padding: 38px 18px;
+    }
+
+    .auth-panel, .hero-card {
+        padding: 22px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+}
+/* ===== CarePoint Smart Assistant ===== */
+
+#carepoint-chatbot {
+    font-family: Arial, sans-serif;
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 9999;
+}
+
+#chat-toggle {
+    background: #087f8c;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+#chat-toggle:hover {
+    background: #066773;
+}
+
+#chat-window {
+    width: 340px;
+    height: 450px;
+    max-height: 75vh;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dce5e8;
+}
+
+#chat-window[hidden] {
+    display: none;
+}
+
+.chat-header {
+    background: #087f8c;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header p {
+    margin: 5px 0 0;
+    font-size: 12px;
+    color: #e0f7fa;
+}
+
+#chat-close {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+#chatMessages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    background: #f4f8f9;
+}
+
+.chat-message {
+    max-width: 85%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.bot-message {
+    background: white;
+    color: #263238;
+    border: 1px solid #e0e7e9;
+    margin-right: auto;
+}
+
+.user-message {
+    background: #087f8c;
+    color: white;
+    margin-left: auto;
+}
+
+#chatForm {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: white;
+    border-top: 1px solid #e0e7e9;
+}
+
+#chatInput {
+    flex: 1;
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #ccd7db;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+}
+
+#chatInput:focus {
+    border-color: #087f8c;
+}
+
+#chatForm button {
+    background: #087f8c;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+@media (max-width: 420px) {
+    #carepoint-chatbot {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    #chat-window {
+        width: calc(100vw - 24px);
+        height: 65vh;
+    }
+}

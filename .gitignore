@@ -1,0 +1,12 @@
+**/target/
+**/build/
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+application-local.properties
+application-secret.properties
+*.log
+.idea/
+.vscode/

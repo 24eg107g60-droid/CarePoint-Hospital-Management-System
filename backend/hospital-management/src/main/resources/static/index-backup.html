@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospital Management System</title>
+
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+header {
+    background: #0f766e;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 15px;
+}
+section {
+    background: white;
+    padding: 22px;
+    margin-bottom: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ddd;
+}
+h2 { color: #0f766e; }
+input, select, textarea, button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    font-size: 15px;
+}
+button {
+    background: #0f766e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover { background: #115e59; }
+.message { font-weight: bold; overflow-wrap: anywhere; }
+.record {
+    padding: 12px;
+    margin: 8px 0;
+    background: #f0fdfa;
+    border-left: 4px solid #0f766e;
+    overflow-wrap: anywhere;
+}
+nav { text-align: center; padding: 12px; background: white; }
+nav a { color: #0f766e; margin: 10px; font-weight: bold; }
+footer { text-align: center; padding: 20px; color: #64748b; }
+</style>
+</head>
+
+<body>
+<header>
+    <h1>Hospital Management System</h1>
+    <p>Manage Patients, Doctors and Appointments</p>
+    <p id="loginStatus">Please log in to use protected features.</p>
+</header>
+
+<main>
+    <section id="authSection">
+        <h2>Create Patient Account</h2>
+        <form id="registerForm">
+            <input id="regName" placeholder="Full Name" required>
+            <input id="regEmail" type="email" placeholder="Email" required>
+            <input id="regPassword" type="password"
+                   placeholder="Password (minimum 8 characters)"
+                   minlength="8" required>
+            <button type="submit">Register Account</button>
+        </form>
+        <p id="registerMessage" class="message"></p>
+
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input id="loginEmail" type="email" placeholder="Email" required>
+            <input id="loginPassword" type="password"
+                   placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage" class="message"></p>
+        <button id="logoutButton" type="button" hidden>Logout</button>
+    </section>
+
+    <section id="patients">
+        <h2>Patient Registration</h2>
+        <form id="patientForm">
+            <input id="patientName" placeholder="Patient Name" required>
+            <input id="patientEmail" type="email"
+                   placeholder="Email Address" required>
+            <input id="patientPhone" placeholder="Phone Number" required>
+            <select id="patientGender" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <button type="submit">Register Patient</button>
+            <button type="reset">Reset</button>
+        </form>
+        <p id="patientMessage" class="message"></p>
+        <button type="button" onclick="loadPatients()">View Patients</button>
+        <div id="patientList"></div>
+    </section>
+
+    <section id="doctors">
+        <h2>Doctor Registration</h2>
+        <form id="doctorForm">
+            <input id="doctorName" placeholder="Doctor Name" required>
+            <input id="doctorSpecialization"
+                   placeholder="Specialization" required>
+            <input id="doctorEmail" type="email"
+                   placeholder="Email Address" required>
+            <input id="doctorPhone" placeholder="Phone Number" required>
+            <button type="submit">Register Doctor</button>
+            <button type="reset">Reset</button>
+        </form>
+        <p id="doctorMessage" class="message"></p>
+        <button type="button" onclick="loadDoctors()">View Doctors</button>
+        <div id="doctorList"></div>
+    </section>
+
+    <section id="appointments">
+        <h2>Book Appointment</h2>
+        <form id="appointmentForm">
+            <input id="appointmentPatientId" type="number"
+                   min="1" placeholder="Patient ID" required>
+            <input id="appointmentDoctorId" type="number"
+                   min="1" placeholder="Doctor ID" required>
+            <label for="appointmentDate">Appointment Date</label>
+            <input id="appointmentDate" type="date" required>
+            <textarea id="appointmentReason"
+                      placeholder="Reason for appointment"></textarea>
+            <button type="submit">Book Appointment</button>
+            <button type="reset">Reset</button>
+        </form>
+        <p id="appointmentMessage" class="message"></p>
+        <button type="button" onclick="loadAppointments()">
+            View Appointments
+        </button>
+        <div id="appointmentList"></div>
+    </section>
+</main>
+
+<footer>Hospital Management System | College Mini Project</footer>
+
+<script>
+async function sendRequest(url, options = {}) {
+    const response = await fetch(url, {
+        ...options,
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        }
+    });
+
+    const text = await response.text();
+    let data = null;
+
+    if (text) {
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = text;
+        }
+    }
+
+    if (!response.ok) {
+        const message = typeof data === "string"
+            ? data
+            : (data?.detail || data?.message || data?.error || response.statusText);
+        throw new Error("HTTP " + response.status + ": " + message);
+    }
+
+    return data;
+}
+
+// Create a patient login account.
+document.getElementById("registerForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const message = document.getElementById("registerMessage");
+
+    try {
+        const result = await sendRequest("/api/auth/register", {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("regName").value.trim(),
+                email: document.getElementById("regEmail").value.trim(),
+                password: document.getElementById("regPassword").value
+            })
+        });
+
+        message.textContent = result.message + ". You can now log in.";
+        document.getElementById("loginEmail").value =
+            document.getElementById("regEmail").value.trim();
+        this.reset();
+    } catch (error) {
+        message.textContent = error.message;
+    }
+});
+
+// Log in and store the session in the browser cookie.
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const message = document.getElementById("loginMessage");
+
+    try {
+        const result = await sendRequest("/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: document.getElementById("loginEmail").value.trim(),
+                password: document.getElementById("loginPassword").value
+            })
+        });
+
+        document.getElementById("loginStatus").textContent =
+            "Logged in as " + result.email + " (" + result.role + ")";
+        message.textContent = result.message;
+        document.getElementById("logoutButton").hidden = false;
+        this.reset();
+    } catch (error) {
+        message.textContent = "Login failed: " + error.message;
+    }
+});
+
+// Log out.
+document.getElementById("logoutButton").addEventListener("click", async function() {
+    try {
+        const result = await sendRequest("/api/auth/logout", { method: "POST" });
+        document.getElementById("loginStatus").textContent =
+            "Please log in to use protected features.";
+        document.getElementById("loginMessage").textContent = result.message;
+        this.hidden = true;
+    } catch (error) {
+        document.getElementById("loginMessage").textContent = error.message;
+    }
+});
+
+// Register a patient record (requires an authorized role).
+document.getElementById("patientForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    try {
+        const saved = await sendRequest("/api/patients", {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("patientName").value,
+                email: document.getElementById("patientEmail").value,
+                phone: document.getElementById("patientPhone").value,
+                gender: document.getElementById("patientGender").value
+            })
+        });
+        document.getElementById("patientMessage").textContent =
+            "Patient registered! ID: " + saved.id;
+        this.reset();
+        loadPatients();
+    } catch (error) {
+        document.getElementById("patientMessage").textContent = error.message;
+    }
+});
+
+// Register a doctor (requires an administrator).
+document.getElementById("doctorForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    try {
+        const saved = await sendRequest("/api/doctors", {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("doctorName").value,
+                specialization: document.getElementById("doctorSpecialization").value,
+                email: document.getElementById("doctorEmail").value,
+                phone: document.getElementById("doctorPhone").value
+            })
+        });
+        document.getElementById("doctorMessage").textContent =
+            "Doctor registered! ID: " + saved.id;
+        this.reset();
+        loadDoctors();
+    } catch (error) {
+        document.getElementById("doctorMessage").textContent = error.message;
+    }
+});
+
+// Book an appointment (requires login).
+document.getElementById("appointmentForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    try {
+        const saved = await sendRequest("/api/appointments", {
+            method: "POST",
+            body: JSON.stringify({
+                patient: { id: Number(document.getElementById("appointmentPatientId").value) },
+                doctor: { id: Number(document.getElementById("appointmentDoctorId").value) },
+                appointmentDate: document.getElementById("appointmentDate").value,
+                reason: document.getElementById("appointmentReason").value
+            })
+        });
+        document.getElementById("appointmentMessage").textContent =
+            "Appointment booked! ID: " + saved.id;
+        this.reset();
+        loadAppointments();
+    } catch (error) {
+        document.getElementById("appointmentMessage").textContent = error.message;
+    }
+});
+
+function showList(containerId, items, formatter) {
+    const container = document.getElementById(containerId);
+    container.replaceChildren();
+
+    if (!items.length) {
+        container.textContent = "No records found.";
+        return;
+    }
+
+    items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "record";
+        div.textContent = formatter(item);
+        container.appendChild(div);
+    });
+}
+
+async function loadPatients() {
+    try {
+        const items = await sendRequest("/api/patients");
+        showList("patientList", items, p =>
+            "ID: " + p.id + " | " + p.name + " | " + p.email +
+            " | " + p.phone + " | " + p.gender);
+    } catch (error) {
+        document.getElementById("patientList").textContent = error.message;
+    }
+}
+
+async function loadDoctors() {
+    try {
+        const items = await sendRequest("/api/doctors");
+        showList("doctorList", items, d =>
+            "ID: " + d.id + " | " + d.name + " | " + d.specialization +
+            " | " + d.email + " | " + d.phone);
+    } catch (error) {
+        document.getElementById("doctorList").textContent = error.message;
+    }
+}
+
+async function loadAppointments() {
+    try {
+        const items = await sendRequest("/api/appointments");
+        showList("appointmentList", items, a =>
+            "Appointment ID: " + a.id +
+            " | Patient: " + (a.patient?.name || a.patient?.id) +
+            " | Doctor: " + (a.doctor?.name || a.doctor?.id) +
+            " | Date: " + a.appointmentDate +
+            " | Status: " + a.status);
+    } catch (error) {
+        document.getElementById("appointmentList").textContent = error.message;
+    }
+}
+</script>
+</body>
+</html>
