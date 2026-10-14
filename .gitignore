@@ -10,3 +10,5 @@ application-secret.properties
 *.log
 .idea/
 .vscode/
+
+*.sql
